@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email Template Generator</title>
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  overflow: hidden;
+}
+
+.header {
+  background: linear-gradient(135deg, #304050 0%, #23496d 100%);
+  color: white;
+  padding: 30px;
+  text-align: center;
+}
+
+.header h1 {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.header p {
+  opacity: 0.9;
+  font-size: 14px;
+}
+
+.content-wrapper {
+  display: grid;
+  grid-template-columns: 500px 1fr;
+  gap: 0;
+  min-height: 600px;
+}
+
+.form-section {
+  padding: 30px;
+  border-right: 1px solid #e0e0e0;
+  background: #f8f9fa;
+  overflow-y: auto;
+  max-height: 800px;
+}
+
+.preview-section {
+  padding: 30px;
+  background: white;
+  overflow-y: auto;
+  max-height: 800px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #304050;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e2408e;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  color: #304050;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.tier-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.tier-option {
+  padding: 15px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.tier-option:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.tier-option.active {
+  border-width: 3px;
+}
+
+.tier-option.essentials.active {
+  border-color: #00a4bd;
+  background: #e6f7fa;
+}
+
+.tier-option.standard.active {
+  border-color: #e2408e;
+  background: #fce4ec;
+}
+
+.tier-option.premier.active {
+  border-color: #D4AF37;
+  background: #fff8e1;
+}
+
+.tier-name {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.tier-color {
+  font-size: 11px;
+  color: #666;
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+}
+
+textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+input[type="checkbox"] {
+  width: auto;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: normal !important;
+  color: #666 !important;
+  font-size: 13px !important;
+}
+
+.btn {
+  background: linear-gradient(135deg, #e2408e 0%, #c62368 100%);
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(226, 64, 142, 0.3);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(226, 64, 142, 0.4);
+}
+
+.preview-iframe {
+  width: 100%;
+  min-height: 500px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: white;
+}
+
+.code-output {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  padding: 20px;
+  border-radius: 8px;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  overflow-x: auto;
+  max-height: 400px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin-top: 20px;
+}
+
+.copy-btn {
+  background: #304050;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.copy-btn:hover {
+  background: #23496d;
+}
+
+.success-message {
+  background: #d4edda;
+  color: #155724;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 10px;
+  display: none;
+  border-left: 4px solid #28a745;
+}
+
+.subsection-title {
+  font-size: 14px;
+  color: #304050;
+  margin: 25px 0 12px 0;
+  font-weight: 600;
+  padding-top: 15px;
+  border-top: 1px solid #ddd;
+}
+
+@media (max-width: 1200px) {
+  .content-wrapper {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-section {
+    border-right: none;
+    border-bottom: 1px solid #e0e0e0;
+    max-height: none;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>Email Template Generator</h1>
+    <p>Select your customer tier and customize content to generate branded HTML email templates</p>
+  </div>
+
+  <div class="content-wrapper">
+    <!-- FORM SECTION -->
+    <div class="form-section">
+      <h2 class="section-title">Step 1: Select Customer Tier</h2>
+      
+      <div class="tier-selector">
+        <div class="tier-option essentials" onclick="selectTier('essentials')">
+          <div class="tier-name" style="color:#00a4bd;">Essentials</div>
+          <div class="tier-color">Blue Accent</div>
+        </div>
+        <div class="tier-option standard active" onclick="selectTier('standard')">
+          <div class="tier-name" style="color:#e2408e;">Standard</div>
+          <div class="tier-color">Pink Accent</div>
+        </div>
+        <div class="tier-option premier" onclick="selectTier('premier')">
+          <div class="tier-name" style="color:#D4AF37;">Premier</div>
+          <div class="tier-color">Gold Accent</div>
+        </div>
+      </div>
+
+      <h2 class="section-title" style="margin-top:40px;">Step 2: Customize Content</h2>
+      
+      <div class="form-group">
+        <label>Email Subject Line:</label>
+        <input type="text" id="subjectLine" value="Performance Insights and Updates for [Client Name]">
+      </div>
+
+      <div class="form-group">
+        <label>Opening Message:</label>
+        <textarea id="openingMessage">Hi [Client Name],
+
+I wanted to reach out and share some exciting insights about your account performance and discuss how [Product Name] continues to drive value for your business.</textarea>
+      </div>
+
+      <div class="subsection-title">Section 1 (Optional)</div>
+
+      <div class="form-group">
+        <label>Section 1 Header:</label>
+        <input type="text" id="section1Header" value="Your Success/Activities with [Product Name]:">
+      </div>
+
+      <div class="form-group">
+        <label>Section 1 Content (one per line):</label>
+        <textarea id="section1Content">50% increase in user engagement
+Reduced compliance reporting time by 30%
+Achieved 85% team adoption rate</textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="section1Bullets" checked>
+          Show bullets for Section 1
+        </label>
+      </div>
+
+      <div class="subsection-title">Section 2 (Optional)</div>
+
+      <div class="form-group">
+        <label>Section 2 Header:</label>
+        <input type="text" id="section2Header" value="What's New Since We Last Connected:">
+      </div>
+
+      <div class="form-group">
+        <label>Section 2 Content (one per line):</label>
+        <textarea id="section2Content">Automated workflow templates - which could benefit [specific use case]
+Advanced analytics dashboard - perfect for [their industry/needs]
+Enhanced security and compliance features
+Improved performance and reliability</textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="section2Bullets" checked>
+          Show bullets for Section 2
+        </label>
+      </div>
+
+      <div class="subsection-title">Section 3 (Optional)</div>
+
+      <div class="form-group">
+        <label>Section 3 Header:</label>
+        <input type="text" id="section3Header" value="">
+      </div>
+
+      <div class="form-group">
+        <label>Section 3 Content (one per line):</label>
+        <textarea id="section3Content"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="section3Bullets" checked>
+          Show bullets for Section 3
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>Closing Message:</label>
+        <textarea id="closingMessage">Would you like to schedule a discussion to go over any of these updates or explore how they might benefit your team?
+
+Looking forward to continuing our partnership!</textarea>
+        <small style="color:#666; font-size:11px; display:block; margin-top:4px;">Tip: Use blank lines for spacing between paragraphs</small>
+      </div>
+
+      <div class="subsection-title">Call-to-Action Button (Optional)</div>
+
+      <div class="form-group">
+        <label>Button Text:</label>
+        <input type="text" id="buttonText" value="📅 Book a Meeting">
+      </div>
+
+      <div class="form-group">
+        <label>Button Link:</label>
+        <input type="text" id="buttonLink" value="https://outlook.office.com/book/IdeagenSuccessTeamBookingPage@ideagenplc.com/">
+      </div>
+
+      <button class="btn" onclick="generateEmail()">🚀 Generate Email Template</button>
+    </div>
+
+    <!-- PREVIEW SECTION -->
+    <div class="preview-section">
+      <h2 class="section-title">Live Preview</h2>
+      
+      <iframe id="previewFrame" class="preview-iframe" sandbox="allow-same-origin"></iframe>
+
+      <h3 style="margin-top:30px; margin-bottom:10px; color:#304050; font-size:16px;">Generated HTML Code:</h3>
+      <div class="code-output" id="codeOutput">Click "Generate Email Template" to create your HTML...</div>
+      
+      <button class="copy-btn" onclick="copyCode()">📋 Copy HTML Code to Clipboard</button>
+      <div class="success-message" id="successMessage">✓ Code copied to clipboard!</div>
+    </div>
+  </div>
+</div>
+
+<script>
+let selectedTier = 'standard';
+
+const tierConfig = {
+  essentials: {
+    badgeColor: '#00a4bd',
+    headerColor: '#00a4bd',
+    buttonColor: '#e2408e',
+    borderWidth: '2px',
+    logoWidth: '160',
+    text: 'Essentials Plan',
+    textColor: '#ffffff',
+    icon: ''
+  },
+  standard: {
+    badgeColor: '#e2408e',
+    headerColor: '#e2408e',
+    buttonColor: '#e2408e',
+    borderWidth: '2px',
+    logoWidth: '160',
+    text: 'Standard Plan',
+    textColor: '#ffffff',
+    icon: ''
+  },
+  premier: {
+    badgeColor: '#D4AF37',
+    headerColor: '#D4AF37',
+    buttonColor: '#e2408e',
+    borderWidth: '3px',
+    logoWidth: '180',
+    text: 'Premier Plan',
+    textColor: '#D4AF37',
+    icon: '★ '
+  }
+};
+
+// Remove brackets and color text blue
+function cleanBrackets(txt) {
+  if (!txt) return '';
+  return String(txt).replace(/\[([^\]]+)\]/g, '<span style="color:#0F9ED5;">$1</span>');
+}
+
+function selectTier(tier) {
+  selectedTier = tier;
+  document.querySelectorAll('.tier-option').forEach(el => el.classList.remove('active'));
+  document.querySelector(`.tier-option.${tier}`).classList.add('active');
+  generateEmail();
+}
+
+function generateEmail() {
+  try {
+    const cfg = tierConfig[selectedTier];
+    
+    const subj = document.getElementById('subjectLine')?.value || '';
+    const open = document.getElementById('openingMessage')?.value || '';
+    const close = document.getElementById('closingMessage')?.value || '';
+    const btnTxt = document.getElementById('buttonText')?.value?.trim() || '';
+    const btnUrl = document.getElementById('buttonLink')?.value?.trim() || '';
+    
+    const s1h = document.getElementById('section1Header')?.value?.trim() || '';
+    const s1c = document.getElementById('section1Content')?.value?.trim() || '';
+    const s1b = document.getElementById('section1Bullets')?.checked ?? true;
+    
+    const s2h = document.getElementById('section2Header')?.value?.trim() || '';
+    const s2c = document.getElementById('section2Content')?.value?.trim() || '';
+    const s2b = document.getElementById('section2Bullets')?.checked ?? true;
+    
+    const s3h = document.getElementById('section3Header')?.value?.trim() || '';
+    const s3c = document.getElementById('section3Content')?.value?.trim() || '';
+    const s3b = document.getElementById('section3Bullets')?.checked ?? true;
+    
+    const html = makeHTML(subj, open, s1h, s1c, s1b, s2h, s2c, s2b, s3h, s3c, s3b, close, btnTxt, btnUrl, cfg);
+    
+    const iframe = document.getElementById('previewFrame');
+    const doc = iframe.contentDocument || iframe.contentWindow.document;
+    doc.open();
+    doc.write(html);
+    doc.close();
+    
+    document.getElementById('codeOutput').textContent = html;
+    
+  } catch (err) {
+    console.error('Generation error:', err);
+    document.getElementById('codeOutput').textContent = 'Error: ' + err.message + '\n\n' + err.stack;
+  }
+}
+
+function makeHTML(subj, open, h1, c1, b1, h2, c2, b2, h3, c3, b3, close, btn, url, cfg) {
+  
+  let content = '';
+  
+  // Opening
+  if (open) {
+    content += `                    <p style="font-size:16px; line-height:175%; text-align:left; color:#304050;">${cleanBrackets(open).replace(/\n/g, '<br>')}</p>\n`;
+  }
+  
+  // Section 1
+  if (h1 && c1) {
+    const lines = c1.split('\n').filter(l => l.trim());
+    const bull = b1 ? '<span style="color:#23496d; font-weight:bold;">•</span> ' : '';
+    content += `                    <p style="font-size:20px; line-height:175%; text-align:left; font-weight:bold; margin-top:30px; color:${cfg.headerColor};">${cleanBrackets(h1)}</p>\n`;
+    lines.forEach(line => {
+      content += `                    <p style="font-size:16px; line-height:175%; text-align:left; color:#304050;">${bull}${cleanBrackets(line)}</p>\n`;
+    });
+  }
+  
+  // Section 2
+  if (h2 && c2) {
+    const lines = c2.split('\n').filter(l => l.trim());
+    const bull = b2 ? '<span style="color:#23496d; font-weight:bold;">•</span> ' : '';
+    content += `                    <p style="font-size:20px; line-height:175%; text-align:left; font-weight:bold; margin-top:30px; color:${cfg.headerColor};">${cleanBrackets(h2)}</p>\n`;
+    lines.forEach(line => {
+      content += `                    <p style="font-size:16px; line-height:175%; text-align:left; color:#304050;">${bull}${cleanBrackets(line)}</p>\n`;
+    });
+  }
+  
+  // Section 3
+  if (h3 && c3) {
+    const lines = c3.split('\n').filter(l => l.trim());
+    const bull = b3 ? '<span style="color:#23496d; font-weight:bold;">•</span> ' : '';
+    content += `                    <p style="font-size:20px; line-height:175%; text-align:left; font-weight:bold; margin-top:30px; color:${cfg.headerColor};">${cleanBrackets(h3)}</p>\n`;
+    lines.forEach(line => {
+      content += `                    <p style="font-size:16px; line-height:175%; text-align:left; color:#304050;">${bull}${cleanBrackets(line)}</p>\n`;
+    });
+  }
+  
+  // Closing
+  if (close) {
+    content += `                    <p style="text-align:left; font-size:16px; line-height:175%; margin-top:30px; color:#304050;">${cleanBrackets(close).replace(/\n/g, '<br>')}</p>\n`;
+  }
+  
+  // Button
+  if (btn && url) {
+    content += `
+                    <table role="presentation" cellpadding="0" cellspacing="0" style="margin:30px auto 20px auto;">
+                      <tbody>
+                        <tr>
+                          <td style="border-radius:6px; background-color:${cfg.buttonColor}; text-align:center;">
+                            <a href="${url}" target="_blank" style="background-color:${cfg.buttonColor}; border:15px solid ${cfg.buttonColor}; color:#ffffff; font-family:Arial, sans-serif; font-size:16px; font-weight:bold; line-height:120%; margin:0; text-decoration:none; padding:0; border-radius:6px; display:inline-block;">${btn}</a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+`;
+  }
+  
+  return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>${cleanBrackets(subj)}</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style type="text/css">
+    body {margin:0; padding:0; font-family:Arial, sans-serif; font-size:15px; color:#23496d;}
+    table {border-spacing:0; border-collapse:collapse;}
+    p {margin:0;}
+  </style>
+</head>
+<body bgcolor="#ffffff">
+
+<div style="background-color:#ffffff;">
+  <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+      <td style="padding:20px 0;">
+        
+        <!-- HEADER -->
+        <div style="padding:0 10px;">
+          <div style="max-width:600px; margin:0 auto; background-color:#304050;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td align="left" style="padding:20px 20px 15px 30px;">
+                  <a href="https://au.ideagen.com/" target="_blank">
+                    <img alt="Ideagen Logo" src="https://hs-8427541.f.hubspotemail.net/hub/8427541/hubfs/Ideagen%20Logos/Ideagen%20Logo%20Reversed.png?upscale=true&width=360" style="display:block; border:none;" width="${cfg.logoWidth}">
+                  </a>
+                  <span style="display:block; margin-top:12px; padding-top:8px; border-top:${cfg.borderWidth} solid ${cfg.badgeColor};">
+                    <span style="font-size:11px; font-weight:600; color:${cfg.textColor}; letter-spacing:1px;">${cfg.icon}${cfg.text}</span>
+                  </span>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- CONTENT & FOOTER -->
+        <div style="padding:0 10px;">
+          <div style="max-width:600px; margin:0 auto;">
+            <div style="background-color:#f2f5f7;">
+              <div style="padding:50px 40px 30px 40px;">
+${content}
+              </div>
+            </div>
+            
+            <div style="background-color:#f2f5f8; padding:20px;">
+              <p style="font-size:15px; line-height:1.5; text-align:center; font-weight:bold; color:#304050; margin:0;">Digital and Portfolio Success Team</p>
+            </div>
+            
+            <div style="background-color:#304050; padding:15px 20px;">
+              <p style="font-size:12px; text-align:center; color:#ffffff; margin:0;">Ideagen, Level 6/418A Elizabeth St, Surry Hills, NSW 2010, 1300 132 090</p>
+            </div>
+          </div>
+        </div>
+
+      </td>
+    </tr>
+  </table>
+</div>
+
+</body>
+</html>`;
+}
+
+function copyCode() {
+  const code = document.getElementById('codeOutput').textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    const msg = document.getElementById('successMessage');
+    msg.style.display = 'block';
+    setTimeout(() => msg.style.display = 'none', 3000);
+  }).catch(() => alert('Failed to copy. Please copy manually.'));
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  console.log('Generator loaded');
+  setTimeout(generateEmail, 200);
+});
+</script>
+
+</body>
+</html>
