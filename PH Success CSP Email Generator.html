@@ -114,18 +114,18 @@ body {
 }
 
 .tier-option.essentials.active {
-  border-color: #00a4bd;
-  background: #e6f7fa;
+  border-color: #8B9299;
+  background: #f5f6f7;
 }
 
 .tier-option.standard.active {
-  border-color: #e2408e;
-  background: #fce4ec;
+  border-color: #17A2B8;
+  background: #d1ecf1;
 }
 
 .tier-option.premier.active {
-  border-color: #D4AF37;
-  background: #fff8e1;
+  border-color: #E91E8C;
+  background: #fce4ec;
 }
 
 .tier-name {
@@ -275,16 +275,16 @@ input[type="checkbox"] {
       
       <div class="tier-selector">
         <div class="tier-option essentials" onclick="selectTier('essentials')">
-          <div class="tier-name" style="color:#00a4bd;">Essentials</div>
-          <div class="tier-color">Blue Accent</div>
+          <div class="tier-name" style="color:#8B9299;">Essentials</div>
+          <div class="tier-color">Gray Accent</div>
         </div>
         <div class="tier-option standard active" onclick="selectTier('standard')">
-          <div class="tier-name" style="color:#e2408e;">Standard</div>
-          <div class="tier-color">Pink Accent</div>
+          <div class="tier-name" style="color:#17A2B8;">Standard</div>
+          <div class="tier-color">Blue Accent</div>
         </div>
         <div class="tier-option premier" onclick="selectTier('premier')">
-          <div class="tier-name" style="color:#D4AF37;">Premier</div>
-          <div class="tier-color">Gold Accent</div>
+          <div class="tier-name" style="color:#E91E8C;">Premier</div>
+          <div class="tier-color">Pink Accent</div>
         </div>
       </div>
 
@@ -407,34 +407,49 @@ let selectedTier = 'standard';
 
 const tierConfig = {
   essentials: {
-    badgeColor: '#00a4bd',
-    headerColor: '#00a4bd',
-    buttonColor: '#e2408e',
+    badgeColor: '#8B9299',
+    headerColor: '#8B9299',
+    buttonColor: '#E91E8C',
     borderWidth: '2px',
-    logoWidth: '160',
+    logoWidth: '140',
     text: 'Essentials Plan',
     textColor: '#ffffff',
-    icon: ''
+    icon: '',
+    tierSVG: `<svg width="70" height="70" viewBox="-60 -65 120 130" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="0,-60 52,-30 52,30 0,60 -52,30 -52,-30" fill="#E8E9EB" stroke="#8B9299" stroke-width="3"/>
+      <polygon points="0,-25 15,0 0,25 -15,0" fill="#8B9299"/>
+    </svg>`
   },
   standard: {
-    badgeColor: '#e2408e',
-    headerColor: '#e2408e',
-    buttonColor: '#e2408e',
+    badgeColor: '#17A2B8',
+    headerColor: '#17A2B8',
+    buttonColor: '#E91E8C',
     borderWidth: '2px',
-    logoWidth: '160',
+    logoWidth: '140',
     text: 'Standard Plan',
     textColor: '#ffffff',
-    icon: ''
+    icon: '',
+    tierSVG: `<svg width="70" height="70" viewBox="-60 -65 120 130" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="0,-60 52,-30 52,30 0,60 -52,30 -52,-30" fill="#E8E9EB" stroke="#17A2B8" stroke-width="3"/>
+      <polygon points="-12,-25 3,0 -12,25 -27,0" fill="#8B9299"/>
+      <polygon points="12,-25 27,0 12,25 -3,0" fill="#17A2B8"/>
+    </svg>`
   },
   premier: {
-    badgeColor: '#D4AF37',
-    headerColor: '#D4AF37',
-    buttonColor: '#e2408e',
+    badgeColor: '#E91E8C',
+    headerColor: '#E91E8C',
+    buttonColor: '#E91E8C',
     borderWidth: '3px',
-    logoWidth: '180',
+    logoWidth: '155',
     text: 'Premier Plan',
-    textColor: '#D4AF37',
-    icon: '★ '
+    textColor: '#E91E8C',
+    icon: '★ ',
+    tierSVG: `<svg width="70" height="70" viewBox="-60 -65 120 130" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="0,-60 52,-30 52,30 0,60 -52,30 -52,-30" fill="#E8E9EB" stroke="#E91E8C" stroke-width="3"/>
+      <polygon points="-20,-25 -5,0 -20,25 -35,0" fill="#8B9299"/>
+      <polygon points="0,-25 15,0 0,25 -15,0" fill="#17A2B8"/>
+      <polygon points="20,-25 35,0 20,25 5,0" fill="#E91E8C"/>
+    </svg>`
   }
 };
 
@@ -572,13 +587,26 @@ function makeHTML(subj, open, h1, c1, b1, h2, c2, b2, h3, c3, b3, close, btn, ur
           <div style="max-width:600px; margin:0 auto; background-color:#304050;">
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
               <tr>
-                <td align="left" style="padding:20px 20px 15px 30px;">
-                  <a href="https://au.ideagen.com/" target="_blank">
-                    <img alt="Ideagen Logo" src="https://hs-8427541.f.hubspotemail.net/hub/8427541/hubfs/Ideagen%20Logos/Ideagen%20Logo%20Reversed.png?upscale=true&width=360" style="display:block; border:none;" width="${cfg.logoWidth}">
-                  </a>
-                  <span style="display:block; margin-top:12px; padding-top:8px; border-top:${cfg.borderWidth} solid ${cfg.badgeColor};">
+                <td style="padding:15px 30px 8px 30px;">
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td align="left" valign="middle" style="width:80px;">
+                        ${cfg.tierSVG}
+                      </td>
+                      <td align="right" valign="middle">
+                        <a href="https://au.ideagen.com/" target="_blank">
+                          <img alt="Ideagen Logo" src="https://hs-8427541.f.hubspotemail.net/hub/8427541/hubfs/Ideagen%20Logos/Ideagen%20Logo%20Reversed.png?upscale=true&width=360" style="display:block; border:none;" width="${cfg.logoWidth}">
+                        </a>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:0 30px 12px 30px;">
+                  <div style="border-top:${cfg.borderWidth} solid ${cfg.badgeColor}; padding-top:8px;">
                     <span style="font-size:11px; font-weight:600; color:${cfg.textColor}; letter-spacing:1px;">${cfg.icon}${cfg.text}</span>
-                  </span>
+                  </div>
                 </td>
               </tr>
             </table>
