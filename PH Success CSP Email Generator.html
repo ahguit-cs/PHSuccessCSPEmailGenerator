@@ -3,292 +3,86 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Email Template Generator</title>
+<title>Ideagen Email Template Builder</title>
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: 'Segoe UI', Arial, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 20px;
-  min-height: 100vh;
-}
-
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-  overflow: hidden;
-}
-
-.header {
-  background: linear-gradient(135deg, #304050 0%, #23496d 100%);
-  color: white;
-  padding: 30px;
-  text-align: center;
-}
-
-.header h1 {
-  font-size: 28px;
-  margin-bottom: 8px;
-}
-
-.header p {
-  opacity: 0.9;
-  font-size: 14px;
-}
-
-.content-wrapper {
-  display: grid;
-  grid-template-columns: 500px 1fr;
-  gap: 0;
-  min-height: 600px;
-}
-
-.form-section {
-  padding: 30px;
-  border-right: 1px solid #e0e0e0;
-  background: #f8f9fa;
-  overflow-y: auto;
-  max-height: 800px;
-}
-
-.preview-section {
-  padding: 30px;
-  background: white;
-  overflow-y: auto;
-  max-height: 800px;
-}
-
-.section-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: #304050;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #e2408e;
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-group label {
-  display: block;
-  font-weight: 600;
-  color: #304050;
-  margin-bottom: 8px;
-  font-size: 13px;
-}
-
-.tier-selector {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.tier-option {
-  padding: 15px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  cursor: pointer;
-  text-align: center;
-  transition: all 0.3s ease;
-  background: white;
-}
-
-.tier-option:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.tier-option.active {
-  border-width: 3px;
-}
-
-.tier-option.essentials.active {
-  border-color: #8B9299;
-  background: #f5f6f7;
-}
-
-.tier-option.standard.active {
-  border-color: #17A2B8;
-  background: #d1ecf1;
-}
-
-.tier-option.premier.active {
-  border-color: #E91E8C;
-  background: #fce4ec;
-}
-
-.tier-name {
-  font-weight: bold;
-  font-size: 14px;
-  margin-bottom: 5px;
-}
-
-.tier-color {
-  font-size: 11px;
-  color: #666;
-}
-
-input[type="text"],
-textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-family: Arial, sans-serif;
-  font-size: 13px;
-}
-
-textarea {
-  min-height: 70px;
-  resize: vertical;
-}
-
-input[type="checkbox"] {
-  width: auto;
-  margin-right: 8px;
-  cursor: pointer;
-}
-
-.checkbox-label {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  font-weight: normal !important;
-  color: #666 !important;
-  font-size: 13px !important;
-}
-
-.btn {
-  background: linear-gradient(135deg, #e2408e 0%, #c62368 100%);
-  color: white;
-  padding: 15px 30px;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  width: 100%;
-  margin-top: 20px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(226, 64, 142, 0.3);
-}
-
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(226, 64, 142, 0.4);
-}
-
-.preview-iframe {
-  width: 100%;
-  min-height: 500px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background: white;
-}
-
-.code-output {
-  background: #1e1e1e;
-  color: #d4d4d4;
-  padding: 20px;
-  border-radius: 8px;
-  font-family: 'Courier New', monospace;
-  font-size: 11px;
-  overflow-x: auto;
-  max-height: 400px;
-  overflow-y: auto;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  margin-top: 20px;
-}
-
-.copy-btn {
-  background: #304050;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-  margin-top: 10px;
-  transition: all 0.3s ease;
-}
-
-.copy-btn:hover {
-  background: #23496d;
-}
-
-.success-message {
-  background: #d4edda;
-  color: #155724;
-  padding: 12px;
-  border-radius: 6px;
-  margin-top: 10px;
-  display: none;
-  border-left: 4px solid #28a745;
-}
-
-.subsection-title {
-  font-size: 14px;
-  color: #304050;
-  margin: 25px 0 12px 0;
-  font-weight: 600;
-  padding-top: 15px;
-  border-top: 1px solid #ddd;
-}
-
-@media (max-width: 1200px) {
-  .content-wrapper {
-    grid-template-columns: 1fr;
-  }
-  
-  .form-section {
-    border-right: none;
-    border-bottom: 1px solid #e0e0e0;
-    max-height: none;
-  }
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; min-height: 100vh; }
+.container { max-width: 1400px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); overflow: hidden; }
+.header { background: linear-gradient(135deg, #304050 0%, #23496d 100%); color: white; padding: 30px; text-align: center; }
+.header h1 { font-size: 28px; margin-bottom: 8px; }
+.header p { opacity: 0.9; font-size: 14px; }
+.content-wrapper { display: grid; grid-template-columns: 500px 1fr; gap: 0; min-height: 600px; }
+.form-section { padding: 30px; border-right: 1px solid #e0e0e0; background: #f8f9fa; overflow-y: auto; max-height: 800px; }
+.preview-section { padding: 30px; background: white; overflow-y: auto; max-height: 800px; }
+.section-title { font-size: 18px; font-weight: 600; color: #304050; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #e2408e; }
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; font-weight: 600; color: #304050; margin-bottom: 8px; font-size: 13px; }
+.tier-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
+.tier-option { padding: 15px; border: 2px solid #ddd; border-radius: 8px; cursor: pointer; text-align: center; transition: all 0.3s ease; background: white; position: relative; z-index: 1; }
+.tier-option:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.tier-option.active { border-width: 3px; }
+.tier-option.essentials.active { border-color: #8B9299; background: #f5f6f7; }
+.tier-option.standard.active { border-color: #17A2B8; background: #d1ecf1; }
+.tier-option.premier.active { border-color: #E91E8C; background: #fce4ec; }
+.tier-option.output-option.active { border-color: #304050; background: #e8f4f8; }
+.tier-name { font-weight: bold; font-size: 14px; margin-bottom: 5px; pointer-events: none; }
+.tier-color { font-size: 11px; color: #666; pointer-events: none; }
+input[type="text"], textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-family: Arial, sans-serif; font-size: 13px; }
+textarea { min-height: 70px; resize: vertical; }
+input[type="checkbox"] { width: auto; margin-right: 8px; cursor: pointer; }
+.checkbox-label { display: flex; align-items: center; cursor: pointer; font-weight: normal !important; color: #666 !important; font-size: 13px !important; }
+.btn { background: linear-gradient(135deg, #e2408e 0%, #c62368 100%); color: white; padding: 15px 30px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(226, 64, 142, 0.3); }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(226, 64, 142, 0.4); }
+.preview-iframe { width: 100%; min-height: 500px; border: 1px solid #ddd; border-radius: 8px; background: white; }
+.code-output { background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 11px; overflow-x: auto; max-height: 400px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word; margin-top: 20px; }
+.copy-btn { background: #304050; color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; margin-top: 10px; transition: all 0.3s ease; }
+.copy-btn:hover { background: #23496d; }
+.success-message { background: #d4edda; color: #155724; padding: 12px; border-radius: 6px; margin-top: 10px; display: none; border-left: 4px solid #28a745; }
+.subsection-title { font-size: 14px; color: #304050; margin: 25px 0 12px 0; font-weight: 600; padding-top: 15px; border-top: 1px solid #ddd; }
+@media (max-width: 1200px) { .content-wrapper { grid-template-columns: 1fr; } .form-section { border-right: none; border-bottom: 1px solid #e0e0e0; max-height: none; } }
 </style>
 </head>
 <body>
 
 <div class="container">
   <div class="header">
-    <h1>Email Template Generator</h1>
+    <h1>Email Template Builder</h1>
     <p>Select your customer tier and customize content to generate branded HTML email templates</p>
   </div>
 
   <div class="content-wrapper">
-    <!-- FORM SECTION -->
     <div class="form-section">
       <h2 class="section-title">Step 1: Select Customer Tier</h2>
       
       <div class="tier-selector">
-        <div class="tier-option essentials" onclick="selectTier('essentials')">
+        <div class="tier-option essentials" onclick="chooseTier('essentials')">
           <div class="tier-name" style="color:#8B9299;">Essentials</div>
           <div class="tier-color">Gray Accent</div>
         </div>
-        <div class="tier-option standard active" onclick="selectTier('standard')">
+        <div class="tier-option standard active" onclick="chooseTier('standard')">
           <div class="tier-name" style="color:#17A2B8;">Standard</div>
           <div class="tier-color">Blue Accent</div>
         </div>
-        <div class="tier-option premier" onclick="selectTier('premier')">
+        <div class="tier-option premier" onclick="chooseTier('premier')">
           <div class="tier-name" style="color:#E91E8C;">Premier</div>
           <div class="tier-color">Pink Accent</div>
         </div>
       </div>
 
-      <h2 class="section-title" style="margin-top:40px;">Step 2: Customize Content</h2>
+      <h2 class="section-title" style="margin-top:30px;">Step 2: Select Output Type</h2>
+      
+      <div class="tier-selector" style="grid-template-columns: 1fr 1fr;">
+        <div class="tier-option output-option active" id="outputFull" onclick="chooseOutput('full')">
+          <div class="tier-name" style="color:#304050;">Full Email</div>
+          <div class="tier-color">Complete HTML</div>
+        </div>
+        <div class="tier-option output-option" id="outputFooter" onclick="chooseOutput('footer')">
+          <div class="tier-name" style="color:#304050;">Footer Only</div>
+          <div class="tier-color">Footer Section</div>
+        </div>
+      </div>
+
+      <h2 class="section-title" style="margin-top:30px;">Step 3: Customize Content</h2>
       
       <div class="form-group">
         <label>Email Subject Line:</label>
@@ -369,14 +163,13 @@ Improved performance and reliability</textarea>
         <textarea id="closingMessage">Would you like to schedule a discussion to go over any of these updates or explore how they might benefit your team?
 
 Looking forward to continuing our partnership!</textarea>
-        <small style="color:#666; font-size:11px; display:block; margin-top:4px;">Tip: Use blank lines for spacing between paragraphs</small>
       </div>
 
       <div class="subsection-title">Call-to-Action Button (Optional)</div>
 
       <div class="form-group">
         <label>Button Text:</label>
-        <input type="text" id="buttonText" value="📅 Book a Meeting">
+        <input type="text" id="buttonText" value="Book a Meeting">
       </div>
 
       <div class="form-group">
@@ -384,275 +177,235 @@ Looking forward to continuing our partnership!</textarea>
         <input type="text" id="buttonLink" value="https://outlook.office.com/book/IdeagenSuccessTeamBookingPage@ideagenplc.com/">
       </div>
 
-      <button class="btn" onclick="generateEmail()">🚀 Generate Email Template</button>
+      <button class="btn" onclick="generate()">Generate Email Template</button>
     </div>
 
-    <!-- PREVIEW SECTION -->
     <div class="preview-section">
       <h2 class="section-title">Live Preview</h2>
-      
       <iframe id="previewFrame" class="preview-iframe" sandbox="allow-same-origin"></iframe>
-
       <h3 style="margin-top:30px; margin-bottom:10px; color:#304050; font-size:16px;">Generated HTML Code:</h3>
       <div class="code-output" id="codeOutput">Click "Generate Email Template" to create your HTML...</div>
-      
-      <button class="copy-btn" onclick="copyCode()">📋 Copy HTML Code to Clipboard</button>
+      <button class="copy-btn" onclick="copyToClipboard()">📋 Copy HTML Code to Clipboard</button>
       <div class="success-message" id="successMessage">✓ Code copied to clipboard!</div>
     </div>
   </div>
 </div>
 
 <script>
-let selectedTier = 'standard';
+var currentTier = 'standard';
+var currentOutput = 'full';
 
-const tierConfig = {
+var tiers = {
   essentials: {
-    badgeColor: '#8B9299',
-    headerColor: '#8B9299',
-    buttonColor: '#E91E8C',
-    borderWidth: '2px',
-    logoWidth: '140',
-    text: 'Essentials Plan',
-    textColor: '#ffffff',
-    icon: '',
-    tierSVG: `<svg width="70" height="70" viewBox="-60 -65 120 130" xmlns="http://www.w3.org/2000/svg">
-      <polygon points="0,-60 52,-30 52,30 0,60 -52,30 -52,-30" fill="#E8E9EB" stroke="#8B9299" stroke-width="3"/>
-      <polygon points="0,-25 15,0 0,25 -15,0" fill="#8B9299"/>
-    </svg>`
+    badge: '#8B9299', header: '#8B9299', button: '#E91E8C', border: '2px', logo: '140', name: 'Essentials Plan', color: '#ffffff', icon: '',
+    svg: '<svg width="70" height="70" viewBox="-60 -65 120 130" xmlns="http://www.w3.org/2000/svg"><polygon points="0,-60 52,-30 52,30 0,60 -52,30 -52,-30" fill="#E8E9EB" stroke="#8B9299" stroke-width="3"/><polygon points="0,-25 15,0 0,25 -15,0" fill="#8B9299"/></svg>'
   },
   standard: {
-    badgeColor: '#17A2B8',
-    headerColor: '#17A2B8',
-    buttonColor: '#E91E8C',
-    borderWidth: '2px',
-    logoWidth: '140',
-    text: 'Standard Plan',
-    textColor: '#ffffff',
-    icon: '',
-    tierSVG: `<svg width="70" height="70" viewBox="-60 -65 120 130" xmlns="http://www.w3.org/2000/svg">
-      <polygon points="0,-60 52,-30 52,30 0,60 -52,30 -52,-30" fill="#E8E9EB" stroke="#17A2B8" stroke-width="3"/>
-      <polygon points="-12,-25 3,0 -12,25 -27,0" fill="#8B9299"/>
-      <polygon points="12,-25 27,0 12,25 -3,0" fill="#17A2B8"/>
-    </svg>`
+    badge: '#17A2B8', header: '#17A2B8', button: '#E91E8C', border: '2px', logo: '140', name: 'Standard Plan', color: '#ffffff', icon: '',
+    svg: '<svg width="70" height="70" viewBox="-60 -65 120 130" xmlns="http://www.w3.org/2000/svg"><polygon points="0,-60 52,-30 52,30 0,60 -52,30 -52,-30" fill="#E8E9EB" stroke="#17A2B8" stroke-width="3"/><polygon points="-12,-25 3,0 -12,25 -27,0" fill="#8B9299"/><polygon points="12,-25 27,0 12,25 -3,0" fill="#17A2B8"/></svg>'
   },
   premier: {
-    badgeColor: '#E91E8C',
-    headerColor: '#E91E8C',
-    buttonColor: '#E91E8C',
-    borderWidth: '3px',
-    logoWidth: '155',
-    text: 'Premier Plan',
-    textColor: '#ffffff',
-    icon: '★ ',
-    tierSVG: `<svg width="70" height="70" viewBox="-60 -65 120 130" xmlns="http://www.w3.org/2000/svg">
-      <polygon points="0,-60 52,-30 52,30 0,60 -52,30 -52,-30" fill="#E8E9EB" stroke="#E91E8C" stroke-width="3"/>
-      <polygon points="-20,-25 -5,0 -20,25 -35,0" fill="#8B9299"/>
-      <polygon points="0,-25 15,0 0,25 -15,0" fill="#17A2B8"/>
-      <polygon points="20,-25 35,0 20,25 5,0" fill="#E91E8C"/>
-    </svg>`
+    badge: '#E91E8C', header: '#E91E8C', button: '#E91E8C', border: '3px', logo: '155', name: 'Premier Plan', color: '#ffffff', icon: '★ ',
+    svg: '<svg width="70" height="70" viewBox="-60 -65 120 130" xmlns="http://www.w3.org/2000/svg"><polygon points="0,-60 52,-30 52,30 0,60 -52,30 -52,-30" fill="#E8E9EB" stroke="#E91E8C" stroke-width="3"/><polygon points="-20,-25 -5,0 -20,25 -35,0" fill="#8B9299"/><polygon points="0,-25 15,0 0,25 -15,0" fill="#17A2B8"/><polygon points="20,-25 35,0 20,25 5,0" fill="#E91E8C"/></svg>'
   }
 };
 
-// Remove brackets and color text blue
-function cleanBrackets(txt) {
+function clean(txt) {
   if (!txt) return '';
   return String(txt).replace(/\[([^\]]+)\]/g, '<span style="color:#0F9ED5;">$1</span>');
 }
 
-function selectTier(tier) {
-  selectedTier = tier;
-  document.querySelectorAll('.tier-option').forEach(el => el.classList.remove('active'));
-  document.querySelector(`.tier-option.${tier}`).classList.add('active');
-  generateEmail();
+function chooseTier(t) {
+  currentTier = t;
+  // Remove active from tier options only
+  document.querySelectorAll('.tier-selector:first-of-type .tier-option').forEach(function(el) { 
+    el.classList.remove('active'); 
+  });
+  // Add active to selected tier
+  document.querySelector('.tier-option.' + t).classList.add('active');
+  generate();
 }
 
-function generateEmail() {
+function chooseOutput(t) {
+  currentOutput = t;
+  var full = document.getElementById('outputFull');
+  var foot = document.getElementById('outputFooter');
+  
+  // Remove active from both output options
+  full.classList.remove('active');
+  foot.classList.remove('active');
+  
+  // Add active to selected
+  if (t === 'full') {
+    full.classList.add('active');
+  } else {
+    foot.classList.add('active');
+  }
+  
+  console.log('Output type changed to:', t);
+  generate();
+}
+
+function generate() {
   try {
-    const cfg = tierConfig[selectedTier];
+    var tier = tiers[currentTier];
+    var html = '';
     
-    const subj = document.getElementById('subjectLine')?.value || '';
-    const open = document.getElementById('openingMessage')?.value || '';
-    const close = document.getElementById('closingMessage')?.value || '';
-    const btnTxt = document.getElementById('buttonText')?.value?.trim() || '';
-    const btnUrl = document.getElementById('buttonLink')?.value?.trim() || '';
+    if (currentOutput === 'footer') {
+      html = makeFooter(tier);
+    } else {
+      var subj = document.getElementById('subjectLine').value || '';
+      var open = document.getElementById('openingMessage').value || '';
+      var s1h = document.getElementById('section1Header').value.trim();
+      var s1c = document.getElementById('section1Content').value.trim();
+      var s1b = document.getElementById('section1Bullets').checked;
+      var s2h = document.getElementById('section2Header').value.trim();
+      var s2c = document.getElementById('section2Content').value.trim();
+      var s2b = document.getElementById('section2Bullets').checked;
+      var s3h = document.getElementById('section3Header').value.trim();
+      var s3c = document.getElementById('section3Content').value.trim();
+      var s3b = document.getElementById('section3Bullets').checked;
+      var close = document.getElementById('closingMessage').value || '';
+      var btn = document.getElementById('buttonText').value.trim();
+      var url = document.getElementById('buttonLink').value.trim();
+      
+      html = makeFull(subj, open, s1h, s1c, s1b, s2h, s2c, s2b, s3h, s3c, s3b, close, btn, url, tier);
+    }
     
-    const s1h = document.getElementById('section1Header')?.value?.trim() || '';
-    const s1c = document.getElementById('section1Content')?.value?.trim() || '';
-    const s1b = document.getElementById('section1Bullets')?.checked ?? true;
-    
-    const s2h = document.getElementById('section2Header')?.value?.trim() || '';
-    const s2c = document.getElementById('section2Content')?.value?.trim() || '';
-    const s2b = document.getElementById('section2Bullets')?.checked ?? true;
-    
-    const s3h = document.getElementById('section3Header')?.value?.trim() || '';
-    const s3c = document.getElementById('section3Content')?.value?.trim() || '';
-    const s3b = document.getElementById('section3Bullets')?.checked ?? true;
-    
-    const html = makeHTML(subj, open, s1h, s1c, s1b, s2h, s2c, s2b, s3h, s3c, s3b, close, btnTxt, btnUrl, cfg);
-    
-    const iframe = document.getElementById('previewFrame');
-    const doc = iframe.contentDocument || iframe.contentWindow.document;
+    var iframe = document.getElementById('previewFrame');
+    var doc = iframe.contentDocument || iframe.contentWindow.document;
     doc.open();
     doc.write(html);
     doc.close();
     
     document.getElementById('codeOutput').textContent = html;
-    
-  } catch (err) {
-    console.error('Generation error:', err);
-    document.getElementById('codeOutput').textContent = 'Error: ' + err.message + '\n\n' + err.stack;
+  } catch (e) {
+    console.error('Error:', e);
+    document.getElementById('codeOutput').textContent = 'Error: ' + e.message;
   }
 }
 
-function makeHTML(subj, open, h1, c1, b1, h2, c2, b2, h3, c3, b3, close, btn, url, cfg) {
+function makeHeader(t) {
+  return '<!-- EMAIL HEADER - Tier: ' + t.name + ' -->\n' +
+    '<div style="padding:0 10px;">\n' +
+    '  <div style="max-width:600px; margin:0 auto; background-color:#304050;">\n' +
+    '    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">\n' +
+    '      <tr>\n' +
+    '        <td style="padding:15px 30px 8px 30px;">\n' +
+    '          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">\n' +
+    '            <tr>\n' +
+    '              <td align="left" valign="middle" style="width:80px;">' + t.svg + '</td>\n' +
+    '              <td align="right" valign="middle">\n' +
+    '                <a href="https://au.ideagen.com/" target="_blank">\n' +
+    '                  <img alt="Ideagen Logo" src="https://hs-8427541.f.hubspotemail.net/hub/8427541/hubfs/Ideagen%20Logos/Ideagen%20Logo%20Reversed.png?upscale=true&width=360" style="display:block; border:none;" width="' + t.logo + '">\n' +
+    '                </a>\n' +
+    '              </td>\n' +
+    '            </tr>\n' +
+    '          </table>\n' +
+    '        </td>\n' +
+    '      </tr>\n' +
+    '      <tr>\n' +
+    '        <td style="padding:0 30px 12px 30px;">\n' +
+    '          <div style="border-top:' + t.border + ' solid ' + t.badge + '; padding-top:8px;">\n' +
+    '            <span style="font-size:11px; font-weight:600; color:' + t.color + '; letter-spacing:1px;">' + t.icon + t.name + '</span>\n' +
+    '          </div>\n' +
+    '        </td>\n' +
+    '      </tr>\n' +
+    '    </table>\n' +
+    '  </div>\n' +
+    '</div>\n' +
+    '<!-- END EMAIL HEADER -->';
+}
+
+function makeFooter(t) {
+  return '<!-- EMAIL FOOTER - Tier: ' + t.name + ' -->\n' +
+    '<div style="padding:0 10px;">\n' +
+    '  <div style="max-width:600px; margin:0 auto;">\n' +
+    '    <div style="background-color:#f2f5f8; padding:20px;">\n' +
+    '      <p style="font-size:15px; line-height:1.5; text-align:center; font-weight:bold; color:#304050; margin:0;">Digital and Portfolio Success Team</p>\n' +
+    '    </div>\n\n' +
+    '    <div style="background-color:#304050; padding:20px 30px;">\n' +
+    '      <p style="font-size:12px; text-align:center; color:#ffffff; margin:0 0 15px 0;">Ideagen, Level 6/418A Elizabeth St, Surry Hills, NSW 2010, 1300 132 090</p>\n' +
+    '      <div style="border-top:' + t.border + ' solid ' + t.badge + '; padding-top:15px;">\n' +
+    '        <table role="presentation" width="100%" cellpadding="0" cellspacing="0">\n' +
+    '          <tr>\n' +
+    '            <td align="left" valign="middle" style="width:80px;">' + t.svg + '</td>\n' +
+    '            <td align="left" valign="middle" style="padding-left:15px;">\n' +
+    '              <span style="font-size:11px; font-weight:600; color:' + t.color + '; letter-spacing:1px;">' + t.icon + t.name + '</span>\n' +
+    '            </td>\n' +
+    '            <td align="right" valign="middle">\n' +
+    '              <a href="https://au.ideagen.com/" target="_blank">\n' +
+    '                <img alt="Ideagen Logo" src="https://hs-8427541.f.hubspotemail.net/hub/8427541/hubfs/Ideagen%20Logos/Ideagen%20Logo%20Reversed.png?upscale=true&width=360" style="display:block; border:none;" width="' + t.logo + '">\n' +
+    '              </a>\n' +
+    '            </td>\n' +
+    '          </tr>\n' +
+    '        </table>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '  </div>\n' +
+    '</div>\n' +
+    '<!-- END EMAIL FOOTER -->';
+}
+
+function makeFull(subj, open, h1, c1, b1, h2, c2, b2, h3, c3, b3, close, btn, url, t) {
+  var body = '';
   
-  let content = '';
+  if (open) body += '                    <p style="font-size:16px; line-height:175%; text-align:left; color:#304050;">' + clean(open).replace(/\n/g, '<br>') + '</p>\n';
   
-  // Opening
-  if (open) {
-    content += `                    <p style="font-size:16px; line-height:175%; text-align:left; color:#304050;">${cleanBrackets(open).replace(/\n/g, '<br>')}</p>\n`;
-  }
-  
-  // Section 1
   if (h1 && c1) {
-    const lines = c1.split('\n').filter(l => l.trim());
-    const bull = b1 ? '<span style="color:#23496d; font-weight:bold;">•</span> ' : '';
-    content += `                    <p style="font-size:20px; line-height:175%; text-align:left; font-weight:bold; margin-top:30px; color:${cfg.headerColor};">${cleanBrackets(h1)}</p>\n`;
-    lines.forEach(line => {
-      content += `                    <p style="font-size:16px; line-height:175%; text-align:left; color:#304050;">${bull}${cleanBrackets(line)}</p>\n`;
+    var lines1 = c1.split('\n').filter(function(l) { return l.trim(); });
+    var bull1 = b1 ? '<span style="color:#23496d; font-weight:bold;">•</span> ' : '';
+    body += '                    <p style="font-size:20px; line-height:175%; text-align:left; font-weight:bold; margin-top:30px; color:' + t.header + ';">' + clean(h1) + '</p>\n';
+    lines1.forEach(function(line) {
+      body += '                    <p style="font-size:16px; line-height:175%; text-align:left; color:#304050;">' + bull1 + clean(line) + '</p>\n';
     });
   }
   
-  // Section 2
   if (h2 && c2) {
-    const lines = c2.split('\n').filter(l => l.trim());
-    const bull = b2 ? '<span style="color:#23496d; font-weight:bold;">•</span> ' : '';
-    content += `                    <p style="font-size:20px; line-height:175%; text-align:left; font-weight:bold; margin-top:30px; color:${cfg.headerColor};">${cleanBrackets(h2)}</p>\n`;
-    lines.forEach(line => {
-      content += `                    <p style="font-size:16px; line-height:175%; text-align:left; color:#304050;">${bull}${cleanBrackets(line)}</p>\n`;
+    var lines2 = c2.split('\n').filter(function(l) { return l.trim(); });
+    var bull2 = b2 ? '<span style="color:#23496d; font-weight:bold;">•</span> ' : '';
+    body += '                    <p style="font-size:20px; line-height:175%; text-align:left; font-weight:bold; margin-top:30px; color:' + t.header + ';">' + clean(h2) + '</p>\n';
+    lines2.forEach(function(line) {
+      body += '                    <p style="font-size:16px; line-height:175%; text-align:left; color:#304050;">' + bull2 + clean(line) + '</p>\n';
     });
   }
   
-  // Section 3
   if (h3 && c3) {
-    const lines = c3.split('\n').filter(l => l.trim());
-    const bull = b3 ? '<span style="color:#23496d; font-weight:bold;">•</span> ' : '';
-    content += `                    <p style="font-size:20px; line-height:175%; text-align:left; font-weight:bold; margin-top:30px; color:${cfg.headerColor};">${cleanBrackets(h3)}</p>\n`;
-    lines.forEach(line => {
-      content += `                    <p style="font-size:16px; line-height:175%; text-align:left; color:#304050;">${bull}${cleanBrackets(line)}</p>\n`;
+    var lines3 = c3.split('\n').filter(function(l) { return l.trim(); });
+    var bull3 = b3 ? '<span style="color:#23496d; font-weight:bold;">•</span> ' : '';
+    body += '                    <p style="font-size:20px; line-height:175%; text-align:left; font-weight:bold; margin-top:30px; color:' + t.header + ';">' + clean(h3) + '</p>\n';
+    lines3.forEach(function(line) {
+      body += '                    <p style="font-size:16px; line-height:175%; text-align:left; color:#304050;">' + bull3 + clean(line) + '</p>\n';
     });
   }
   
-  // Closing
-  if (close) {
-    content += `                    <p style="text-align:left; font-size:16px; line-height:175%; margin-top:30px; color:#304050;">${cleanBrackets(close).replace(/\n/g, '<br>')}</p>\n`;
-  }
+  if (close) body += '                    <p style="text-align:left; font-size:16px; line-height:175%; margin-top:30px; color:#304050;">' + clean(close).replace(/\n/g, '<br>') + '</p>\n';
   
-  // Button
   if (btn && url) {
-    content += `
-                    <table role="presentation" cellpadding="0" cellspacing="0" style="margin:30px auto 20px auto;">
-                      <tbody>
-                        <tr>
-                          <td style="border-radius:6px; background-color:${cfg.buttonColor}; text-align:center;">
-                            <a href="${url}" target="_blank" style="background-color:${cfg.buttonColor}; border:15px solid ${cfg.buttonColor}; color:#ffffff; font-family:Arial, sans-serif; font-size:16px; font-weight:bold; line-height:120%; margin:0; text-decoration:none; padding:0; border-radius:6px; display:inline-block;">${btn}</a>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-`;
+    body += '\n                    <table role="presentation" cellpadding="0" cellspacing="0" style="margin:30px auto 20px auto;">\n' +
+      '                      <tbody><tr><td style="border-radius:6px; background-color:' + t.button + '; text-align:center;">\n' +
+      '                        <a href="' + url + '" target="_blank" style="background-color:' + t.button + '; border:15px solid ' + t.button + '; color:#ffffff; font-family:Arial, sans-serif; font-size:16px; font-weight:bold; line-height:120%; margin:0; text-decoration:none; padding:0; border-radius:6px; display:inline-block;">' + btn + '</a>\n' +
+      '                      </td></tr></tbody>\n                    </table>\n';
   }
   
-  return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <title>${cleanBrackets(subj)}</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style type="text/css">
-    body {margin:0; padding:0; font-family:Arial, sans-serif; font-size:15px; color:#23496d;}
-    table {border-spacing:0; border-collapse:collapse;}
-    p {margin:0;}
-  </style>
-</head>
-<body bgcolor="#ffffff">
-
-<div style="background-color:#ffffff;">
-  <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
-    <tr>
-      <td style="padding:20px 0;">
-        
-        <!-- HEADER -->
-        <div style="padding:0 10px;">
-          <div style="max-width:600px; margin:0 auto; background-color:#304050;">
-            <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-              <tr>
-                <td style="padding:15px 30px 8px 30px;">
-                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-                    <tr>
-                      <td align="left" valign="middle" style="width:80px;">
-                        ${cfg.tierSVG}
-                      </td>
-                      <td align="right" valign="middle">
-                        <a href="https://au.ideagen.com/" target="_blank">
-                          <img alt="Ideagen Logo" src="https://hs-8427541.f.hubspotemail.net/hub/8427541/hubfs/Ideagen%20Logos/Ideagen%20Logo%20Reversed.png?upscale=true&width=360" style="display:block; border:none;" width="${cfg.logoWidth}">
-                        </a>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-              <tr>
-                <td style="padding:0 30px 12px 30px;">
-                  <div style="border-top:${cfg.borderWidth} solid ${cfg.badgeColor}; padding-top:8px;">
-                    <span style="font-size:11px; font-weight:600; color:${cfg.textColor}; letter-spacing:1px;">${cfg.icon}${cfg.text}</span>
-                  </div>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-
-        <!-- CONTENT & FOOTER -->
-        <div style="padding:0 10px;">
-          <div style="max-width:600px; margin:0 auto;">
-            <div style="background-color:#f2f5f7;">
-              <div style="padding:50px 40px 30px 40px;">
-${content}
-              </div>
-            </div>
-            
-            <div style="background-color:#f2f5f8; padding:20px;">
-              <p style="font-size:15px; line-height:1.5; text-align:center; font-weight:bold; color:#304050; margin:0;">Digital and Portfolio Success Team</p>
-            </div>
-            
-            <div style="background-color:#304050; padding:15px 20px;">
-              <p style="font-size:12px; text-align:center; color:#ffffff; margin:0;">Ideagen, Level 6/418A Elizabeth St, Surry Hills, NSW 2010, 1300 132 090</p>
-            </div>
-          </div>
-        </div>
-
-      </td>
-    </tr>
-  </table>
-</div>
-
-</body>
-</html>`;
+  return '<!DOCTYPE html>\n<html>\n<head>\n<title>' + clean(subj) + '</title>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<style>\nbody {margin:0; padding:0; font-family:Arial, sans-serif; font-size:15px; color:#23496d;}\ntable {border-spacing:0; border-collapse:collapse;}\np {margin:0;}\n</style>\n</head>\n<body bgcolor="#ffffff">\n\n<div>\n  <table role="presentation" width="100%">\n    <tr>\n      <td style="padding:20px 0;">\n\n        <div style="padding:0 10px;">\n          <div style="max-width:600px; margin:0 auto; background-color:#304050;">\n            <table role="presentation" width="100%">\n              <tr>\n                <td style="padding:15px 30px 8px 30px;">\n                  <table role="presentation" width="100%">\n                    <tr>\n                      <td align="left" valign="middle" style="width:80px;">' + t.svg + '</td>\n                      <td align="right" valign="middle">\n                        <a href="https://au.ideagen.com/" target="_blank">\n                          <img alt="Ideagen Logo" src="https://hs-8427541.f.hubspotemail.net/hub/8427541/hubfs/Ideagen%20Logos/Ideagen%20Logo%20Reversed.png?upscale=true&width=360" style="display:block; border:none;" width="' + t.logo + '">\n                        </a>\n                      </td>\n                    </tr>\n                  </table>\n                </td>\n              </tr>\n              <tr>\n                <td style="padding:0 30px 12px 30px;">\n                  <div style="border-top:' + t.border + ' solid ' + t.badge + '; padding-top:8px;">\n                    <span style="font-size:11px; font-weight:600; color:' + t.color + '; letter-spacing:1px;">' + t.icon + t.name + '</span>\n                  </div>\n                </td>\n              </tr>\n            </table>\n          </div>\n        </div>\n\n        <div style="padding:0 10px;">\n          <div style="max-width:600px; margin:0 auto;">\n            <div style="background-color:#f2f5f7;">\n              <div style="padding:50px 40px 30px 40px;">\n' +
+    body +
+    '              </div>\n            </div>\n\n            <div style="background-color:#f2f5f8; padding:20px;">\n              <p style="font-size:15px; line-height:1.5; text-align:center; font-weight:bold; color:#304050; margin:0;">Digital and Portfolio Success Team</p>\n            </div>\n\n            <div style="background-color:#304050; padding:15px 20px;">\n              <p style="font-size:12px; text-align:center; color:#ffffff; margin:0;">Ideagen, Level 6/418A Elizabeth St, Surry Hills, NSW 2010, 1300 132 090</p>\n            </div>\n          </div>\n        </div>\n\n      </td>\n    </tr>\n  </table>\n</div>\n\n</body>\n</html>';
 }
 
-function copyCode() {
-  const code = document.getElementById('codeOutput').textContent;
-  navigator.clipboard.writeText(code).then(() => {
-    const msg = document.getElementById('successMessage');
+function copyToClipboard() {
+  var code = document.getElementById('codeOutput').textContent;
+  navigator.clipboard.writeText(code).then(function() {
+    var msg = document.getElementById('successMessage');
     msg.style.display = 'block';
-    setTimeout(() => msg.style.display = 'none', 3000);
-  }).catch(() => alert('Failed to copy. Please copy manually.'));
+    setTimeout(function() { msg.style.display = 'none'; }, 3000);
+  }).catch(function() {
+    alert('Failed to copy. Please copy manually.');
+  });
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  console.log('Generator loaded');
-  setTimeout(generateEmail, 200);
+window.addEventListener('DOMContentLoaded', function() {
+  setTimeout(generate, 200);
 });
 </script>
 
