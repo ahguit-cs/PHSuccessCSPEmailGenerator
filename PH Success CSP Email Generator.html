@@ -244,7 +244,7 @@ function buildHeader(t) {
     '            </a>\n' +
     '          </td>\n' +
     '          <td align="right" valign="middle">\n' +
-    '            <table cellpadding="0" cellspacing="0" style="float:right; height:100%;">\n' +
+    '            <table cellpadding="0" cellspacing="0" style="float:right;">\n' +
     '              <tr>\n' +
     '                <td style="border-left:5px solid ' + t.badge + '; padding-left:15px; height:40px;">\n' +
     '                  <span style="font-size:14px; font-weight:600; color:#ffffff; letter-spacing:0.5px; white-space:nowrap;">' + t.name + '</span>\n' +
@@ -262,6 +262,35 @@ function buildHeader(t) {
     '    </td>\n' +
     '  </tr>\n' +
     '</table>';
+}
+
+function buildFooter(t) {
+  return '<div style="background-color:#f2f5f8; padding:20px;">\n' +
+    '  <p style="font-family:Arial, sans-serif; font-size:15px; line-height:1.5; text-align:center; font-weight:bold; color:#304050; margin:0;">Digital and Portfolio Success Team</p>\n' +
+    '</div>\n\n' +
+    '<div style="background-color:#304050; padding:20px 30px;">\n' +
+    '  <p style="font-family:Arial, sans-serif; font-size:12px; text-align:center; color:#ffffff; margin:0 0 15px 0;">Ideagen, Level 6/418A Elizabeth St, Surry Hills, NSW 2010, 1300 132 090</p>\n' +
+    '  <div style="border-top:2px solid ' + t.badge + '; padding-top:15px;">\n' +
+    '    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">\n' +
+    '      <tr>\n' +
+    '        <td align="left" valign="middle">\n' +
+    '          <a href="https://au.ideagen.com/" target="_blank">\n' +
+    '            <img alt="Ideagen Logo" src="https://hs-8427541.f.hubspotemail.net/hub/8427541/hubfs/Ideagen%20Logos/Ideagen%20Logo%20Reversed.png?upscale=true&width=360" style="display:block; border:none;" width="' + t.logo + '">\n' +
+    '          </a>\n' +
+    '        </td>\n' +
+    '        <td align="right" valign="middle">\n' +
+    '          <table cellpadding="0" cellspacing="0" style="float:right;">\n' +
+    '            <tr>\n' +
+    '              <td style="border-left:5px solid ' + t.badge + '; padding-left:12px; height:40px;">\n' +
+    '                <span style="font-family:Arial, sans-serif; font-size:12px; font-weight:600; color:#ffffff; letter-spacing:0.5px; white-space:nowrap;">' + t.name + '</span>\n' +
+    '              </td>\n' +
+    '            </tr>\n' +
+    '          </table>\n' +
+    '        </td>\n' +
+    '      </tr>\n' +
+    '    </table>\n' +
+    '  </div>\n' +
+    '</div>';
 }
 
 function generate() {
@@ -307,32 +336,7 @@ function makeFooter(t) {
   return '<!-- EMAIL FOOTER -->\n' +
     '<div style="padding:0 10px;">\n' +
     '  <div style="max-width:600px; margin:0 auto;">\n' +
-    '    <div style="background-color:#f2f5f8; padding:20px;">\n' +
-    '      <p style="font-size:15px; line-height:1.5; text-align:center; font-weight:bold; color:#304050; margin:0;">Digital and Portfolio Success Team</p>\n' +
-    '    </div>\n\n' +
-    '    <div style="background-color:#304050; padding:20px 30px;">\n' +
-    '      <p style="font-size:12px; text-align:center; color:#ffffff; margin:0 0 15px 0;">Ideagen, Level 6/418A Elizabeth St, Surry Hills, NSW 2010, 1300 132 090</p>\n' +
-    '      <div style="border-top:2px solid ' + t.badge + '; padding-top:15px;">\n' +
-    '        <table role="presentation" width="100%" cellpadding="0" cellspacing="0">\n' +
-    '          <tr>\n' +
-    '            <td align="left" valign="middle">\n' +
-    '              <a href="https://au.ideagen.com/" target="_blank">\n' +
-    '                <img alt="Ideagen Logo" src="https://hs-8427541.f.hubspotemail.net/hub/8427541/hubfs/Ideagen%20Logos/Ideagen%20Logo%20Reversed.png?upscale=true&width=360" style="display:block; border:none;" width="' + t.logo + '">\n' +
-    '              </a>\n' +
-    '            </td>\n' +
-    '            <td align="right" valign="middle">\n' +
-    '              <table cellpadding="0" cellspacing="0" style="float:right;">\n' +
-    '                <tr>\n' +
-    '                  <td style="border-left:5px solid ' + t.badge + '; padding-left:12px; height:40px;">\n' +
-    '                    <span style="font-size:12px; font-weight:600; color:#ffffff; letter-spacing:0.5px; white-space:nowrap;">' + t.name + '</span>\n' +
-    '                  </td>\n' +
-    '                </tr>\n' +
-    '              </table>\n' +
-    '            </td>\n' +
-    '          </tr>\n' +
-    '        </table>\n' +
-    '      </div>\n' +
-    '    </div>\n' +
+    buildFooter(t) + '\n' +
     '  </div>\n' +
     '</div>\n' +
     '<!-- END FOOTER -->';
@@ -381,7 +385,9 @@ function makeFull(subj, open, h1, c1, b1, h2, c2, b2, h3, c3, b3, close, btn, ur
   
   return '<!DOCTYPE html>\n<html>\n<head>\n<title>' + clean(subj) + '</title>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<style>\nbody {margin:0; padding:0; font-family:Arial, sans-serif; font-size:15px; color:#23496d;}\ntable {border-spacing:0; border-collapse:collapse;}\np {margin:0;}\n</style>\n</head>\n<body bgcolor="#ffffff">\n\n<div>\n  <table role="presentation" width="100%">\n    <tr>\n      <td style="padding:20px 0;">\n\n        <div style="padding:0 10px;">\n          <div style="max-width:600px; margin:0 auto; background-color:#304050;">\n' + buildHeader(t) + '\n          </div>\n        </div>\n\n        <div style="padding:0 10px;">\n          <div style="max-width:600px; margin:0 auto;">\n            <div style="background-color:#f2f5f7;">\n              <div style="padding:50px 40px 30px 40px;">\n' +
     body +
-    '              </div>\n            </div>\n\n            <div style="background-color:#f2f5f8; padding:20px;">\n              <p style="font-size:15px; line-height:1.5; text-align:center; font-weight:bold; color:#304050; margin:0;">Digital and Portfolio Success Team</p>\n            </div>\n\n            <div style="background-color:#304050; padding:15px 20px;">\n              <p style="font-size:12px; text-align:center; color:#ffffff; margin:0;">Ideagen, Level 6/418A Elizabeth St, Surry Hills, NSW 2010, 1300 132 090</p>\n            </div>\n          </div>\n        </div>\n\n      </td>\n    </tr>\n  </table>\n</div>\n\n</body>\n</html>';
+    '              </div>\n            </div>\n\n' +
+    buildFooter(t) + '\n' +
+    '          </div>\n        </div>\n\n      </td>\n    </tr>\n  </table>\n</div>\n\n</body>\n</html>';
 }
 
 function copyToClipboard() {
