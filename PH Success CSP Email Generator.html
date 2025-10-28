@@ -165,6 +165,13 @@ Improved performance and reliability</textarea>
 Looking forward to continuing our partnership!</textarea>
       </div>
 
+      <div class="subsection-title">Footer Information</div>
+
+      <div class="form-group">
+        <label>Footer Address:</label>
+        <input type="text" id="footerAddress" value="Ideagen, Level 6/418A Elizabeth St, Surry Hills, NSW 2010, 1300 132 090">
+      </div>
+
       <div class="subsection-title">Call-to-Action Button (Optional)</div>
 
       <div class="form-group">
@@ -264,12 +271,12 @@ function buildHeader(t) {
     '</table>';
 }
 
-function buildFooter(t) {
+function buildFooter(t, addr) {
   return '<div style="background-color:#f2f5f8; padding:12px 20px;">\n' +
     '  <p style="font-family:Arial, sans-serif; font-size:13px; line-height:1.4; text-align:center; font-weight:bold; color:#304050; margin:0;">Digital and Portfolio Success Team</p>\n' +
     '</div>\n\n' +
     '<div style="background-color:#304050; padding:12px 30px;">\n' +
-    '  <p style="font-family:Arial, sans-serif; font-size:11px; text-align:center; color:#ffffff; margin:0 0 10px 0;">Ideagen, Level 6/418A Elizabeth St, Surry Hills, NSW 2010, 1300 132 090</p>\n' +
+    '  <p style="font-family:Arial, sans-serif; font-size:11px; text-align:center; color:#ffffff; margin:0 0 10px 0;">' + addr + '</p>\n' +
     '  <div style="border-top:2px solid ' + t.badge + '; padding-top:10px;">\n' +
     '    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">\n' +
     '      <tr>\n' +
@@ -299,7 +306,8 @@ function generate() {
     var html = '';
     
     if (currentOutput === 'footer') {
-      html = makeFooter(tier);
+      var footerAddr = document.getElementById('footerAddress').value || 'Ideagen, Level 6/418A Elizabeth St, Surry Hills, NSW 2010, 1300 132 090';
+      html = makeFooter(tier, footerAddr);
     } else {
       var subj = document.getElementById('subjectLine').value || '';
       var open = document.getElementById('openingMessage').value || '';
@@ -315,8 +323,9 @@ function generate() {
       var close = document.getElementById('closingMessage').value || '';
       var btn = document.getElementById('buttonText').value.trim();
       var url = document.getElementById('buttonLink').value.trim();
+      var footerAddr = document.getElementById('footerAddress').value || 'Ideagen, Level 6/418A Elizabeth St, Surry Hills, NSW 2010, 1300 132 090';
       
-      html = makeFull(subj, open, s1h, s1c, s1b, s2h, s2c, s2b, s3h, s3c, s3b, close, btn, url, tier);
+      html = makeFull(subj, open, s1h, s1c, s1b, s2h, s2c, s2b, s3h, s3c, s3b, close, btn, url, tier, footerAddr);
     }
     
     var iframe = document.getElementById('previewFrame');
@@ -332,41 +341,47 @@ function generate() {
   }
 }
 
-function makeFooter(t) {
+function makeFooter(t, addr) {
   return '<!-- EMAIL FOOTER -->\n' +
     '<div style="width:100%;">\n' +
-    buildFooter(t) + '\n' +
+    buildFooter(t, addr) + '\n' +
     '</div>\n' +
     '<!-- END FOOTER -->';
 }
 
-function makeFull(subj, open, h1, c1, b1, h2, c2, b2, h3, c3, b3, close, btn, url, t) {
+function makeFull(subj, open, h1, c1, b1, h2, c2, b2, h3, c3, b3, close, btn, url, t, addr) {
   var body = '';
   
   if (open) body += '                    <p style="font-size:16px; line-height:175%; text-align:left; color:#304050;">' + clean(open).replace(/\n/g, '<br>') + '</p>\n';
   
-  if (h1 && c1) {
+  if (h1) {
+    body += '                    <p style="font-size:20px; line-height:175%; text-align:left; font-weight:bold; margin-top:30px; color:' + t.header + ';">' + clean(h1) + '</p>\n';
+  }
+  if (c1) {
     var lines1 = c1.split('\n').filter(function(l) { return l.trim(); });
     var bull1 = b1 ? '<span style="color:#23496d; font-weight:bold;">•</span> ' : '';
-    body += '                    <p style="font-size:20px; line-height:175%; text-align:left; font-weight:bold; margin-top:30px; color:' + t.header + ';">' + clean(h1) + '</p>\n';
     lines1.forEach(function(line) {
       body += '                    <p style="font-size:16px; line-height:175%; text-align:left; color:#304050;">' + bull1 + clean(line) + '</p>\n';
     });
   }
   
-  if (h2 && c2) {
+  if (h2) {
+    body += '                    <p style="font-size:20px; line-height:175%; text-align:left; font-weight:bold; margin-top:30px; color:' + t.header + ';">' + clean(h2) + '</p>\n';
+  }
+  if (c2) {
     var lines2 = c2.split('\n').filter(function(l) { return l.trim(); });
     var bull2 = b2 ? '<span style="color:#23496d; font-weight:bold;">•</span> ' : '';
-    body += '                    <p style="font-size:20px; line-height:175%; text-align:left; font-weight:bold; margin-top:30px; color:' + t.header + ';">' + clean(h2) + '</p>\n';
     lines2.forEach(function(line) {
       body += '                    <p style="font-size:16px; line-height:175%; text-align:left; color:#304050;">' + bull2 + clean(line) + '</p>\n';
     });
   }
   
-  if (h3 && c3) {
+  if (h3) {
+    body += '                    <p style="font-size:20px; line-height:175%; text-align:left; font-weight:bold; margin-top:30px; color:' + t.header + ';">' + clean(h3) + '</p>\n';
+  }
+  if (c3) {
     var lines3 = c3.split('\n').filter(function(l) { return l.trim(); });
     var bull3 = b3 ? '<span style="color:#23496d; font-weight:bold;">•</span> ' : '';
-    body += '                    <p style="font-size:20px; line-height:175%; text-align:left; font-weight:bold; margin-top:30px; color:' + t.header + ';">' + clean(h3) + '</p>\n';
     lines3.forEach(function(line) {
       body += '                    <p style="font-size:16px; line-height:175%; text-align:left; color:#304050;">' + bull3 + clean(line) + '</p>\n';
     });
@@ -384,7 +399,7 @@ function makeFull(subj, open, h1, c1, b1, h2, c2, b2, h3, c3, b3, close, btn, ur
   return '<!DOCTYPE html>\n<html>\n<head>\n<title>' + clean(subj) + '</title>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<style>\nbody {margin:0; padding:0; font-family:Arial, sans-serif; font-size:15px; color:#23496d;}\ntable {border-spacing:0; border-collapse:collapse;}\np {margin:0;}\n</style>\n</head>\n<body bgcolor="#ffffff">\n\n<div>\n  <table role="presentation" width="100%">\n    <tr>\n      <td style="padding:20px 0;">\n\n        <div style="padding:0 10px;">\n          <div style="max-width:600px; margin:0 auto; background-color:#304050;">\n' + buildHeader(t) + '\n          </div>\n        </div>\n\n        <div style="padding:0 10px;">\n          <div style="max-width:600px; margin:0 auto;">\n            <div style="background-color:#f2f5f7;">\n              <div style="padding:50px 40px 30px 40px;">\n' +
     body +
     '              </div>\n            </div>\n\n' +
-    buildFooter(t) + '\n' +
+    buildFooter(t, addr) + '\n' +
     '          </div>\n        </div>\n\n      </td>\n    </tr>\n  </table>\n</div>\n\n</body>\n</html>';
 }
 
